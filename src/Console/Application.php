@@ -12,7 +12,7 @@ class Application extends BaseApplication
     /**
      * Application logo
      * 
-     * @link http://patorjk.com/software/taag/#p=display&f=Blocks&t=ARCADe Source for the logo
+     * @link http://patorjk.com/software/taag/#p=display&f=Doom&t=ARCADe Source for the logo
      * @var string
      */
     private static $logo = '  ___  ______  _____   ___ ______     
