@@ -1,0 +1,26 @@
+{
+    "name": "caelaris/arcade",
+    "description": "ARCADe: A Rapid Console Application Development tool",
+    "type": "project",
+    "require": {
+        "php": ">=5.4",
+        "kherge/box": "~2.0",
+        "symfony/console": "~2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Stapersma",
+            "email": "info@caelaris.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Caelaris\\Arcade\\": "src"
+        }
+    }
+}

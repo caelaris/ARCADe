@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
+    <testsuites>
+        <testsuite name="Caelaris ARCADe Test Suite">
+            <directory phpVersion="5.4" phpVersionOperator=">=" suffix="Test.php">tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
