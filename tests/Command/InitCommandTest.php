@@ -12,6 +12,7 @@ class InitCommandTest extends PHPUnit_Framework_TestCase
     const CLASS_NAME_SYMFONY_HELPER_SET = '\Symfony\Component\Console\Helper\HelperSet';
     const CLASS_NAME_SYMFONY_QUESTION_HELPER = '\Symfony\Component\Console\Helper\QuestionHelper';
     const CLASS_NAME_CONFIRMATION_QUESTION = '\Symfony\Component\Console\Question\ConfirmationQuestion';
+    const CLASS_NAME_SYMFONY_QUESTION = '\Symfony\Component\Console\Question\Question';
     /**
      * @var InitCommand
      */
@@ -52,32 +53,58 @@ class InitCommandTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @return \Symfony\Component\Console\Helper\QuestionHelper|PHPUnit_Framework_MockObject_MockObject
      */
-    public function testValidatePathAsksForConfirmation()
+    private function getQuestionHelperMock()
     {
         $questionHelperMock = $this->getMock(self::CLASS_NAME_SYMFONY_QUESTION_HELPER);
-        $helperSetMock = $this->getMock(self::CLASS_NAME_SYMFONY_HELPER_SET);
-        $helperSetMock->expects($this->once())->method('get')->with('question')->willReturn($questionHelperMock);
-        /** @noinspection PhpParamsInspection */
-        $this->command->setHelperSet($helperSetMock);
-        $inputMock = $this->getMock(self::CLASS_NAME_SYMFONY_INPUT_INTERFACE);
-        $inputMock->expects($this->once())->method('getOption')->with(InitCommand::OPTION_PATH)->willReturn('\tmp\test');
-        $outputMock = $this->getMock(self::CLASS_NAME_SYMFONY_OUTPUT_INTERFACE);
-
-        $questionMock = $this->getMock(self::CLASS_NAME_CONFIRMATION_QUESTION, [], [], '', false);
-        $questionHelperMock->expects($this->once())->method('ask')->with($inputMock, $outputMock, $questionMock);
-
-        /** @noinspection PhpParamsInspection */
-        $this->command->validatePath($inputMock, $outputMock, $questionMock);
+        return $questionHelperMock;
     }
 
-    public function testValidatePathAsksNoQuestionIfPathOptionIsNotSet()
+    /**
+     * @return \Symfony\Component\Console\Helper\HelperSet|PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getHelperSetMock()
+    {
+        $helperSetMock = $this->getMock(self::CLASS_NAME_SYMFONY_HELPER_SET);
+        return $helperSetMock;
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Input\InputInterface|PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getInputInterfaceMock()
     {
         $inputMock = $this->getMock(self::CLASS_NAME_SYMFONY_INPUT_INTERFACE);
-        $inputMock->expects($this->once())->method('getOption')->with(InitCommand::OPTION_PATH)->willReturn(null);
-        $outputMock = $this->getMock(self::CLASS_NAME_SYMFONY_OUTPUT_INTERFACE);
+        return $inputMock;
+    }
 
-        $this->command->validatePath($inputMock, $outputMock);
+    /**
+     * @return \Symfony\Component\Console\Output\OutputInterface|PHPUnit_Framework_MockObject_MockObject
+     */
+    private function getOutputInterfaceMock()
+    {
+        $outputMock = $this->getMock(self::CLASS_NAME_SYMFONY_OUTPUT_INTERFACE);
+        return $outputMock;
+    }
+
+    /**
+     * @param bool $default
+     * @return PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Console\Question\ConfirmationQuestion
+     */
+    private function getConfirmationQuestionMock($default = true)
+    {
+        $questionMock = $this->getMock(self::CLASS_NAME_CONFIRMATION_QUESTION, [], ['', $default]);
+        return $questionMock;
+    }
+
+    /**
+     * @param bool $default
+     * @return PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Console\Question\Question
+     */
+    private function getQuestionMock($default = true)
+    {
+        $questionMock = $this->getMock(self::CLASS_NAME_SYMFONY_QUESTION, [], ['', $default]);
+        return $questionMock;
     }
 }

@@ -4,7 +4,6 @@ namespace Caelaris\Arcade\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,7 +13,7 @@ use Symfony\Component\Console\Question\Question;
 /**
  * Class InitCommand
  */
-class InitCommand extends Command
+final class InitCommand extends Command
 {
     const OPTION_PATH = 'path';
     const SHORT_OPTION_PATH = 'p';
@@ -43,39 +42,35 @@ class InitCommand extends Command
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>This command will help you to quickly setup a new console application</info>');
+        $path = $this->validatePath($input, $output, $input->getOption(self::OPTION_PATH));
 
-        $path = $this->validatePath($input, $output);
-//        /** @var QuestionHelper $helper */
-//        $helper = $this->getHelper('question');
-//        $path = $input->getOption(self::OPTION_PATH);
-//        if (null !== $path) {
-//            $path = realpath($path);
-//            if (!$helper->ask($input, $output, $question)) {
-//                $newPathQuestion = new Question('Where would you like your new application to be created: ');
-//                $path = $helper->ask($input, $output, $newPathQuestion);
-//                echo realpath($path);
-//            }
-//        }
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @param null $confirmationQuestion
+     * @param $path
+     * @return
      */
-    public function validatePath(InputInterface $input, OutputInterface $output, $confirmationQuestion = null)
+    private function validatePath(InputInterface $input, OutputInterface $output, $path)
     {
-        $path = $input->getOption(self::OPTION_PATH);
+        $path = realpath($path);
 
-        if (null === $path) {
-            return realpath('.');
-        }
-
-        if (null === $confirmationQuestion) {
-            $confirmationQuestion = new ConfirmationQuestion('Your new application will be created at <comment>' . $path . '</comment>.' . PHP_EOL . 'Do you want to change the installation path [y/N]: ', false);
-        }
+        $confirmPathQuestion = new ConfirmationQuestion('Current install path: <comment>'
+            . $path 
+            . '</comment>. '
+            . 'Confirm? [Y/n]: '
+            , true
+        );
+        
         /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
-        $helper->ask($input, $output, $confirmationQuestion);
+        if (!$helper->ask($input, $output, $confirmPathQuestion)) {
+            $newPathQuestion = new Question('Please specify the path where the new application should be created: ' . PHP_EOL);
+            $newPath = $helper->ask($input, $output, $newPathQuestion);
+            $path = $this->validatePath($input, $output, $newPath);
+        }
+
+        return $path;
     }
 }
