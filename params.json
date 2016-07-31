@@ -1,0 +1,6 @@
+{
+  "name": "Arcade",
+  "tagline": "A Rapid Console Application Development tool",
+  "body": "# ARCADe - A Rapid Console Application Development tool\r\n[![Build Status](https://travis-ci.org/caelaris/ARCADe.svg?branch=master)](https://travis-ci.org/caelaris/ARCADe)\r\n[![Latest Stable Version](https://poser.pugx.org/caelaris/arcade/v/stable)](https://packagist.org/packages/caelaris/arcade)\r\n[![Total Downloads](https://poser.pugx.org/caelaris/arcade/downloads)](https://packagist.org/packages/caelaris/arcade)\r\n[![Latest Unstable Version](https://poser.pugx.org/caelaris/arcade/v/unstable)](https://packagist.org/packages/caelaris/arcade)\r\n[![License](https://poser.pugx.org/caelaris/arcade/license)](https://packagist.org/packages/caelaris/arcade)\r\n\r\nARCADe will be a tool to quickly deploy all the default files for a new Symfony console application.\r\nIt is currently still a work in progress.",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
