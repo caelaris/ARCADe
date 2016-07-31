@@ -6,6 +6,6 @@ require __DIR__.'/../vendor/autoload.php';
 use Caelaris\Arcade\Console\Application;
 use Caelaris\Arcade\Command\InitCommand;
 
-$application = new Application('ARCADe', '0.0.2-dev');
+$application = new Application('ARCADe', '@package_version@');
 $application->add(new InitCommand());
 $application->run();
